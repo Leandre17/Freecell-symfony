@@ -77,6 +77,24 @@ class FreeCellGame
         return $this->performMove($state, $from, $to, true);
     }
 
+    public function autoMove(array $state, array $from): array
+    {
+        $card = $this->cardsAt($state, $from, 1)[0];
+        $suit = CardHelper::suitOf($card);
+
+        if ($this->canAutoComplete($state, $card)) {
+            return $this->performMove($state, $from, ['type' => 'foundation', 'index' => $suit], true);
+        }
+
+        foreach ($state['freecells'] as $index => $freecell) {
+            if ($freecell === null) {
+                return $this->performMove($state, $from, ['type' => 'free', 'index' => $index], true);
+            }
+        }
+
+        throw new \InvalidArgumentException('Aucune cellule libre disponible et la carte ne peut pas encore aller en fondation.');
+    }
+
     public function undo(array $state): array
     {
         if (empty($state['history'])) {

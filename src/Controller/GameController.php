@@ -58,6 +58,24 @@ class GameController extends AbstractController
         }
     }
 
+    #[Route('/auto-move', name: 'game_auto_move', methods: ['POST'])]
+    public function autoMove(Request $request): JsonResponse
+    {
+        $payload = json_decode($request->getContent(), true) ?? [];
+        $state = $this->game->getState($request->getSession());
+        $wasWon = $state['won'];
+
+        try {
+            $state = $this->game->autoMove($state, $payload['from'] ?? []);
+            $this->game->saveState($request->getSession(), $state);
+            $this->recordWin($wasWon, $state);
+
+            return new JsonResponse(['success' => true, 'state' => $state]);
+        } catch (\InvalidArgumentException $e) {
+            return new JsonResponse(['success' => false, 'error' => $e->getMessage(), 'state' => $state]);
+        }
+    }
+
     #[Route('/undo', name: 'game_undo', methods: ['POST'])]
     public function undo(Request $request): JsonResponse
     {

@@ -8,6 +8,8 @@
 
   let state = JSON.parse(appEl.dataset.state);
   let selected = null;
+  let pendingCardClick = null;
+  const DOUBLE_CLICK_DELAY = 250;
 
   const SUIT_SYMBOLS = { S: "♠", H: "♥", D: "♦", C: "♣" };
   const RANK_LABELS = {
@@ -88,7 +90,10 @@
     slot.className = `slot slot-${type}`;
     slot.dataset.type = type;
     slot.dataset.index = index;
-    slot.addEventListener("click", () => onSlotClick(type, index));
+    slot.addEventListener("click", () => {
+      flushPendingCardClick();
+      onSlotClick(type, index);
+    });
 
     if (cards.length === 0) {
       if (emptySuit) {
@@ -126,7 +131,29 @@
 
       cardEl.addEventListener("click", (e) => {
         e.stopPropagation();
-        onSlotClick(type, index, ci);
+        pendingCardClick = { type, index, cardIndex: ci };
+        window.setTimeout(() => {
+          if (
+            pendingCardClick?.type === type &&
+            pendingCardClick.index === index &&
+            pendingCardClick.cardIndex === ci
+          ) {
+            flushPendingCardClick();
+          }
+        }, DOUBLE_CLICK_DELAY);
+      });
+
+      cardEl.addEventListener("dblclick", (e) => {
+        e.stopPropagation();
+        pendingCardClick = null;
+        if (type === "column" && ci !== cards.length - 1) {
+          return;
+        }
+
+        selected = null;
+        sendAction("/auto-move", {
+          from: { type, index, count: 1 },
+        });
       });
 
       slot.appendChild(cardEl);
@@ -137,6 +164,16 @@
     }
 
     return slot;
+  }
+
+  function flushPendingCardClick() {
+    if (!pendingCardClick) {
+      return;
+    }
+
+    const click = pendingCardClick;
+    pendingCardClick = null;
+    onSlotClick(click.type, click.index, click.cardIndex);
   }
 
   function onSlotClick(type, index, cardIndex = null) {
