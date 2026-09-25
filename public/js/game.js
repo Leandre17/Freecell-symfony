@@ -106,7 +106,7 @@
       cardEl.textContent = cardLabel(card);
 
       if (type === "column") {
-        cardEl.style.top = `${2 + ci * 22}px`;
+        cardEl.style.top = `${2 + ci * 28}px`;
       }
 
       const selectedStart =
@@ -133,7 +133,7 @@
     });
 
     if (type === "column") {
-      slot.style.minHeight = `${100 + (cards.length - 1) * 22}px`;
+      slot.style.minHeight = `${126 + (cards.length - 1) * 28}px`;
     }
 
     return slot;

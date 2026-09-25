@@ -78,7 +78,7 @@ button:disabled {
 
 #board {
   padding: 16px 24px 40px;
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
@@ -96,15 +96,15 @@ button:disabled {
 
 .columns {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .slot {
   position: relative;
-  width: 72px;
-  min-height: 100px;
+  width: 92px;
+  min-height: 126px;
   background: rgba(255, 255, 255, 0.08);
   border: 2px solid rgba(255, 255, 255, 0.25);
   border-radius: 8px;
@@ -123,15 +123,15 @@ button:disabled {
   position: absolute;
   left: 2px;
   top: 2px;
-  width: 64px;
-  height: 88px;
+  width: 84px;
+  height: 116px;
   background: #fdfdfd;
   color: #111;
   border-radius: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-  padding: 6px;
+  padding: 9px;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
   cursor: pointer;
   transition: transform 0.12s ease;
 }
@@ -165,15 +165,15 @@ button:disabled {
     gap: 8px;
   }
   .slot {
-    width: 52px;
+    width: 68px;
   }
   .card {
-    width: 44px;
-    height: 62px;
-    font-size: 0.85rem;
-    padding: 4px;
+    width: 60px;
+    height: 84px;
+    font-size: 1rem;
+    padding: 6px;
   }
   .columns {
-    gap: 6px;
+    gap: 8px;
   }
 }
