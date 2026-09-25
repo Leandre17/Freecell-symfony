@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id="app" data-state='{{ state|json_encode|raw }}'>
+    <header>
+        <h1>FreeCell</h1>
+        <div class="stats">
+            <span id="moves-count">Coups : {{ state.moves }}</span>
+            <span>Parties : {{ stats.games_started }}</span>
+            <span>Victoires : {{ stats.games_won }}</span>
+            <button id="undo-button" type="button" title="Annuler le dernier coup" {% if state.history is empty %}disabled{% endif %}>↶</button>
+            <button id="auto-complete-button" type="button">Auto-compléter</button>
+            <form action="{{ path('game_new') }}" method="post">
+                <button type="submit">Nouvelle partie</button>
+            </form>
+        </div>
+    </header>
+
+    <div id="message" class="message"></div>
+    <div id="board"></div>
+
+    <p class="help">
+        Clique sur une carte pour la sélectionner, puis clique sur une colonne,
+        une cellule libre ou une fondation pour l'y déposer.
+    </p>
+</div>
+<script src="/js/game.js"></script>
+{% endblock %}

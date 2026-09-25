@@ -1,0 +1,179 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: radial-gradient(ellipse at top, #1e6b45, #0c3a24);
+  color: #fff;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.95rem;
+}
+
+button {
+  background: #2e7d4f;
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+button:hover {
+  background: #3a9463;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.stats form {
+  margin: 0;
+}
+
+.message {
+  text-align: center;
+  min-height: 26px;
+  padding: 6px;
+  font-weight: bold;
+}
+
+.message.error {
+  color: #ffb3b3;
+}
+.message.win {
+  color: #ffe066;
+  font-size: 1.3rem;
+}
+
+.help {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 0.85rem;
+  padding: 0 16px 24px;
+}
+
+#board {
+  padding: 16px 24px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.freecells,
+.foundations {
+  display: flex;
+  gap: 10px;
+}
+
+.columns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.slot {
+  position: relative;
+  width: 72px;
+  min-height: 100px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+}
+
+.empty-symbol {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.7rem;
+  opacity: 0.35;
+}
+
+.card {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 64px;
+  height: 88px;
+  background: #fdfdfd;
+  color: #111;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+  padding: 6px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+.card.red {
+  color: #c62828;
+}
+.card.black {
+  color: #151515;
+}
+
+.card.selected {
+  outline: 3px solid #ffe066;
+  transform: translateY(-8px);
+  z-index: 5;
+}
+
+.slot-free .card,
+.slot-foundation .card {
+  position: static;
+}
+
+@media (max-width: 720px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stats {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .slot {
+    width: 52px;
+  }
+  .card {
+    width: 44px;
+    height: 62px;
+    font-size: 0.85rem;
+    padding: 4px;
+  }
+  .columns {
+    gap: 6px;
+  }
+}
